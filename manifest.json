@@ -1,0 +1,18 @@
+{
+  "name": "台灣旅行手帳",
+  "short_name": "旅行手帳",
+  "description": "Taiwan Travel Handbook — 你的旅行規劃夥伴",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5EDDD",
+  "theme_color": "#F5EDDD",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
