@@ -7,8 +7,23 @@ if (workbox) {
   console.log('[SW] Workbox loaded successfully');
 
   // Cache static assets at runtime (since we can't use build-time injection)
+  // Use NetworkFirst for documents to always get fresh content
   workbox.routing.registerRoute(
-    ({ request }) => ['document', 'script', 'style', 'image', 'font'].includes(request.destination),
+    ({ request }) => request.destination === 'document',
+    new workbox.strategies.NetworkFirst({
+      cacheName: 'static-assets',
+      plugins: [
+        new workbox.expiration.ExpirationPlugin({
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24, // 1 day
+        }),
+      ],
+    })
+  );
+
+  // Cache other static assets (script, style, image, font) with StaleWhileRevalidate
+  workbox.routing.registerRoute(
+    ({ request }) => ['script', 'style', 'image', 'font'].includes(request.destination),
     new workbox.strategies.StaleWhileRevalidate({
       cacheName: 'static-assets',
       plugins: [
